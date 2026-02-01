@@ -1,0 +1,40 @@
+@startuml
+class Book {
+  -title: String
+  -author: String
+  -category: String
+  -isBorrowed: Boolean
+  +borrow()
+  +returnBook()
+}
+
+class Member {
+  -name: String
+  -memberID: int
+  -borrowedBooks: List
+  +borrowBook()
+  +returnBook()
+  +viewHistory()
+}
+
+class Librarian {
+  -name: String
+  +addBook()
+  +removeBook()
+  +updateBook()
+  +manageMember()
+}
+
+class Transaction {
+  -transactionID: int
+  -date: Date
+  -fineAmount: float
+  +calculateFine()
+}
+
+Book "1" -- "*" Member : borrowed by
+Librarian --> Book : manages
+Librarian --> Member : manages
+Member --> Transaction
+Book --> Transaction
+@enduml
