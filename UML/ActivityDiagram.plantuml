@@ -1,0 +1,11 @@
+@startuml
+start
+:Member searches for book;
+if (Book available?) then (yes)
+  :Borrow book;
+  :Update due date;
+else (no)
+  :Notify member;
+endif
+stop
+@enduml
