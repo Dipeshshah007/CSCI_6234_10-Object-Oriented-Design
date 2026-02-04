@@ -1,0 +1,145 @@
+@startuml
+' ================================================
+' Library Management System — Use Case Diagram
+' Object-Oriented Design | Prof. Walt Melo
+' ================================================
+
+left to right direction
+
+skinparam shadowing false
+
+skinparam actor {
+  BorderColor #2c3e50
+  BackgroundColor #ffffff
+  FontColor #2c3e50
+  FontStyle 1
+  FontSize 14
+}
+
+skinparam usecase {
+  BackgroundColor #eaf2f8
+  BorderColor #2c3e50
+  FontColor #1a252f
+  FontSize 13
+  ArrowColor #2c3e50
+}
+
+skinparam note {
+  BackgroundColor #fef9e7
+  BorderColor #d4ac0d
+  FontColor #2c3e50
+  FontSize 11
+}
+
+skinparam rectangle {
+  BorderColor #2c3e50
+  BackgroundColor #ffffff
+  FontColor #2c3e50
+  FontStyle 1
+  FontSize 16
+}
+
+title Library Management System — Use Case Diagram
+
+' ===== Actors =====
+actor "Librarian" as Librarian
+actor "Member" as Member
+
+' ===== Scope (System Boundary) =====
+rectangle "Library Management System" {
+
+  ' ===== Use Cases =====
+  usecase "Manage Catalog" as UC1
+  usecase "Register Member" as UC2
+  usecase "Generate Report" as UC3
+  usecase "Search Book" as UC4
+  usecase "Borrow Book" as UC5
+  usecase "Return Book" as UC6
+  usecase "Pay Fine" as UC7
+
+  ' ===== Associations =====
+  ' Librarian associations
+  Librarian -- UC1
+  Librarian -- UC2
+  Librarian -- UC3
+  Librarian -- UC6
+
+  ' Member associations
+  Member -- UC4
+  Member -- UC5
+  Member -- UC6
+
+  ' ===== Dependencies =====
+  ' include: Borrow Book includes Search Book
+  UC5 ..> UC4 : «include»
+
+  ' extend: Return Book extends Pay Fine
+  UC6 ..> UC7 : «extend»
+
+}
+
+' ===================================================
+' Notes — Descriptions for Actors and Use Cases
+' ===================================================
+
+' --- Actor Notes ---
+note left of Librarian
+  **Librarian**: A primary actor who is responsible
+  for managing the library's daily operations. The
+  Librarian registers new members, maintains and
+  updates the book catalog, processes book returns,
+  and generates reports on library activities.
+end note
+
+note right of Member
+  **Member**: A primary actor who represents a
+  registered library user. The Member can search
+  for books, borrow available books, and return
+  borrowed books. If a book is returned late, the
+  Member may also be required to pay a fine.
+end note
+
+' --- Use Case Notes ---
+note top of UC1
+  **Manage Catalog**: The Librarian adds, updates,
+  or removes book entries in the library catalog to
+  keep the collection accurate and up to date.
+end note
+
+note top of UC2
+  **Register Member**: The Librarian creates a new
+  member account by collecting the user's personal
+  details and assigning a unique membership ID.
+end note
+
+note bottom of UC3
+  **Generate Report**: The Librarian requests the
+  system to produce reports on borrowing activity,
+  overdue books, or overall library statistics.
+end note
+
+note top of UC4
+  **Search Book**: The Member queries the system
+  using keywords, title, or author to find books
+  available in the library catalog.
+end note
+
+note top of UC5
+  **Borrow Book**: The Member selects an available
+  book and checks it out. This use case always
+  includes Search Book first to locate the book.
+end note
+
+note bottom of UC6
+  **Return Book**: Both the Member and the Librarian
+  can process the return of a previously borrowed
+  book. If the book is overdue, Pay Fine is triggered.
+end note
+
+note bottom of UC7
+  **Pay Fine**: If a borrowed book is returned after
+  the due date, the Member is required to pay a
+  penalty fine before the return can be completed.
+end note
+
+@enduml
