@@ -1,0 +1,56 @@
+@startuml ManageCatalog
+' ================================================
+' Robustness Diagram: Manage Catalog
+' Library Management System | Prof. Walt Melo
+' Group: G25
+' ================================================
+
+skinparam defaultFontSize 12
+skinparam defaultFontName Arial
+
+' Legend
+rectangle "Legend" {
+  (Boundary) as LegendBoundary
+  control LegendControl
+  entity LegendEntity
+  note right of LegendBoundary
+    **Boundary**: UI Elements
+    **Control**: Business Logic
+    **Entity**: Domain Objects
+  end note
+}
+
+' Actors
+actor Librarian
+
+' Boundary Objects (UI Elements)
+boundary "Catalog\nManagement\nScreen" as CatalogScreen
+boundary "Book Entry\nForm" as BookForm
+boundary "Confirmation\nDialog" as ConfirmDialog
+
+' Control Objects (Business Logic)
+control "Catalog\nController" as CatalogController
+control "Validation\nHandler" as ValidationHandler
+
+' Entity Objects (Domain Model)
+entity "Book" as Book
+entity "Catalog" as Catalog
+entity "ISBN\nDatabase" as ISBNDb
+
+' Interactions
+Librarian -> CatalogScreen : Access catalog management
+CatalogScreen -> CatalogController : Request catalog operations
+CatalogController -> Catalog : Retrieve catalog data
+
+Librarian -> BookForm : Enter book details\n(Add/Update/Remove)
+BookForm -> ValidationHandler : Validate book information
+ValidationHandler -> ISBNDb : Verify ISBN
+
+ValidationHandler -> CatalogController : Process validated data
+CatalogController -> Book : Create/Update/Delete book
+CatalogController -> Catalog : Update catalog
+
+CatalogController -> ConfirmDialog : Provide operation result
+ConfirmDialog -> Librarian : Display success/error message
+
+@enduml

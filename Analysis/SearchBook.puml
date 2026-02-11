@@ -1,0 +1,47 @@
+@startuml SearchBook
+' ================================================
+' Robustness Diagram: Search Book
+' Library Management System | Prof. Walt Melo
+' Group: G25
+' ================================================
+
+skinparam defaultFontSize 12
+skinparam defaultFontName Arial
+
+' Actors
+actor Member
+
+' Boundary Objects (UI Elements)
+boundary "Search\nInterface" as SearchUI
+boundary "Search\nResults Page" as ResultsPage
+boundary "Book Details\nDialog" as DetailsDialog
+
+' Control Objects (Business Logic)
+control "Search\nController" as SearchController
+control "Query\nProcessor" as QueryProcessor
+
+' Entity Objects (Domain Model)
+entity "Book" as Book
+entity "Catalog" as Catalog
+entity "Book\nMetadata" as Metadata
+
+' Interactions
+Member -> SearchUI : Enter search query\n(title, author, category, ISBN)
+SearchUI -> SearchController : Submit search request
+
+SearchController -> QueryProcessor : Process search query
+QueryProcessor -> Catalog : Query catalog database
+Catalog -> Book : Retrieve matching books
+Book -> Metadata : Get book details
+
+QueryProcessor -> SearchController : Return search results
+SearchController -> ResultsPage : Display book list with\navailability status
+
+Member -> ResultsPage : Select book for details
+ResultsPage -> SearchController : Request book details
+SearchController -> Book : Get full book information
+SearchController -> DetailsDialog : Provide book details
+
+DetailsDialog -> Member : Display complete book info\n(title, author, availability, location)
+
+@enduml
