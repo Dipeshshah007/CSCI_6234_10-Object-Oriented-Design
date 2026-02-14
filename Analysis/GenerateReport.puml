@@ -1,0 +1,24 @@
+@startuml GenerateReport
+' Robustness Diagram: Generate Report
+' Group: G25 - Library Management System
+
+skinparam monochrome true
+title Robustness Diagram: Generate Report\nGroup G25 - Library Management System
+
+actor Librarian
+boundary "Report\nDashboard" as Dashboard <<Boundary>>
+boundary "Report\nViewer" as Viewer <<Boundary>>
+control "Report\nGenerator" as Generator <<Control>>
+control "Data\nAggregator" as Aggregator <<Control>>
+entity "Transaction\nHistory" as TransHistory <<Entity>>
+entity "Book\nInventory" as Inventory <<Entity>>
+entity "Member\nRecords" as MemberRecords <<Entity>>
+
+Librarian --> Dashboard : 1. Request
+Dashboard --> Generator : 2. Initiate
+Generator --> TransHistory : 3. Query
+Generator --> Inventory : 4. Query
+Generator --> MemberRecords : 5. Query
+Aggregator --> Viewer : 6. Display
+
+@enduml

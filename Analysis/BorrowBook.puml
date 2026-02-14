@@ -1,0 +1,29 @@
+@startuml BorrowBook
+' Robustness Diagram: Borrow Book
+' Group: G25 - Library Management System
+
+skinparam monochrome true
+title Robustness Diagram: Borrow Book\nGroup G25 - Library Management System
+
+actor Member
+boundary "Search\nInterface" as SearchUI <<Boundary>>
+boundary "Book\nDetails" as BookDetails <<Boundary>>
+boundary "Checkout\nForm" as Checkout <<Boundary>>
+control "Search\nController" as SearchCtrl <<Control>>
+control "Borrow\nController" as BorrowCtrl <<Control>>
+control "Availability\nChecker" as AvailChecker <<Control>>
+entity "Book" as Book <<Entity>>
+entity "Member" as MemberEntity <<Entity>>
+entity "Loan\nRecord" as LoanRecord <<Entity>>
+
+Member --> SearchUI : 1. Search
+SearchUI --> SearchCtrl : 2. Find
+SearchCtrl --> Book : 3. Check
+Member --> BookDetails : 4. Select
+BookDetails --> BorrowCtrl : 5. Borrow
+BorrowCtrl --> MemberEntity : 6. Verify
+Member --> Checkout : 7. Confirm
+Checkout --> AvailChecker : 8. Process
+AvailChecker --> LoanRecord : 9. Create
+
+@enduml

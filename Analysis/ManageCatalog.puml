@@ -1,0 +1,55 @@
+@startuml ManageCatalog
+' ================================================
+' Robustness Diagram: Manage Catalog
+' Library Management System | Prof. Walt Melo
+' Group: G25
+' ================================================
+
+!define BOUNDARY_COLOR #White
+!define CONTROL_COLOR #White  
+!define ENTITY_COLOR #White
+
+skinparam defaultFontSize 14
+skinparam defaultFontName Arial
+skinparam monochrome true
+
+title Robustness Diagram: Manage Catalog\nGroup G25 - Library Management System
+
+actor Librarian
+
+' Boundary Objects (UI)
+boundary "Catalog\nScreen" as CatalogScreen <<Boundary>>
+boundary "Book\nForm" as BookForm <<Boundary>>
+
+' Control Objects (Logic)
+control "Catalog\nController" as CatalogController <<Control>>
+control "Validator" as Validator <<Control>>
+
+' Entity Objects (Data)  
+entity "Catalog" as Catalog <<Entity>>
+entity "Book" as Book <<Entity>>
+
+' Flow with numbered steps
+Librarian --> CatalogScreen : 1. Access
+CatalogScreen --> CatalogController : 2. Request
+CatalogController --> Catalog : 3. Retrieve
+
+Librarian --> BookForm : 4. Enter data
+BookForm --> Validator : 5. Validate
+Validator --> Book : 6. Update
+
+Catalog --> CatalogController : 7. Confirm
+CatalogController --> CatalogScreen : 8. Display
+
+note right of CatalogController
+  **Flow:**
+  1. Librarian accesses system
+  2. Request catalog data
+  3. Retrieve from database
+  4. Enter book information
+  5. Validate data
+  6. Update book record
+  7-8. Confirm and display result
+end note
+
+@enduml

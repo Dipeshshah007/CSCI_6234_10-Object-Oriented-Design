@@ -1,0 +1,48 @@
+@startuml RegisterMember
+' ================================================
+' Robustness Diagram: Register Member
+' Library Management System | Prof. Walt Melo
+' Group: G25
+' ================================================
+
+skinparam defaultFontSize 14
+skinparam defaultFontName Arial
+skinparam monochrome true
+
+title Robustness Diagram: Register Member\nGroup G25 - Library Management System
+
+actor Librarian
+
+' Boundary Objects
+boundary "Registration\nScreen" as RegScreen <<Boundary>>
+boundary "Member\nForm" as MemberForm <<Boundary>>
+
+' Control Objects
+control "Registration\nController" as RegController <<Control>>
+control "ID\nGenerator" as IDGen <<Control>>
+
+' Entity Objects
+entity "Member\nDatabase" as MemberDB <<Entity>>
+entity "Member" as Member <<Entity>>
+
+' Flow
+Librarian --> RegScreen : 1. Access
+Librarian --> MemberForm : 2. Enter info
+
+RegScreen --> RegController : 3. Process
+MemberForm --> IDGen : 4. Validate
+
+RegController --> MemberDB : 5. Check DB
+IDGen --> Member : 6. Create
+
+note right of RegController
+  **Flow:**
+  1. Access registration screen
+  2. Enter member information
+  3. Process registration request
+  4. Validate and generate ID
+  5. Check for duplicates
+  6. Create member record
+end note
+
+@enduml

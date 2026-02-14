@@ -1,0 +1,22 @@
+@startuml SearchBook
+' Robustness Diagram: Search Book
+' Group: G25 - Library Management System
+
+skinparam monochrome true
+title Robustness Diagram: Search Book\nGroup G25 - Library Management System
+
+actor Member
+boundary "Search\nInterface" as SearchUI <<Boundary>>
+boundary "Results\nPage" as Results <<Boundary>>
+control "Search\nController" as SearchCtrl <<Control>>
+control "Query\nProcessor" as QueryProc <<Control>>
+entity "Catalog" as Catalog <<Entity>>
+entity "Book" as Book <<Entity>>
+
+Member --> SearchUI : 1. Enter query
+SearchUI --> SearchCtrl : 2. Submit
+SearchCtrl --> Catalog : 3. Search
+QueryProc --> Book : 4. Retrieve
+Results --> Member : 5. Display
+
+@enduml

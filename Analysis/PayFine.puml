@@ -1,0 +1,25 @@
+@startuml PayFine
+' Robustness Diagram: Pay Fine
+' Group: G25 - Library Management System
+
+skinparam monochrome true
+title Robustness Diagram: Pay Fine\nGroup G25 - Library Management System
+
+actor Member
+boundary "Payment\nScreen" as PaymentScreen <<Boundary>>
+boundary "Payment\nForm" as PaymentForm <<Boundary>>
+control "Payment\nController" as PaymentCtrl <<Control>>
+control "Payment\nProcessor" as PaymentProc <<Control>>
+entity "Fine\nRecord" as FineRecord <<Entity>>
+entity "Payment\nTransaction" as PaymentTrans <<Entity>>
+
+Member --> PaymentScreen : 1. View fine
+PaymentScreen --> PaymentCtrl : 2. Request
+PaymentCtrl --> FineRecord : 3. Retrieve
+Member --> PaymentForm : 4. Pay
+PaymentForm --> PaymentProc : 5. Process
+PaymentProc --> PaymentTrans : 6. Create
+PaymentTrans --> PaymentCtrl : 7. Update
+PaymentCtrl --> PaymentScreen : 8. Confirm
+
+@enduml

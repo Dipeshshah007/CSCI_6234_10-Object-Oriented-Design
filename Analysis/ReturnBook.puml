@@ -1,0 +1,26 @@
+@startuml ReturnBook
+' Robustness Diagram: Return Book
+' Group: G25 - Library Management System
+
+skinparam monochrome true
+title Robustness Diagram: Return Book\nGroup G25 - Library Management System
+
+actor Member
+actor Librarian
+boundary "Return\nScreen" as ReturnScreen <<Boundary>>
+boundary "Scan\nInterface" as ScanUI <<Boundary>>
+control "Return\nController" as ReturnCtrl <<Control>>
+control "Date\nValidator" as DateValidator <<Control>>
+entity "Book" as Book <<Entity>>
+entity "Loan\nRecord" as LoanRecord <<Entity>>
+
+Member --> ReturnScreen : 1. Initiate
+Librarian --> ScanUI : 1. Process
+ReturnScreen --> ReturnCtrl : 2. Submit
+ScanUI --> DateValidator : 3. Scan
+ReturnCtrl --> Book : 4. Update
+DateValidator --> LoanRecord : 5. Close
+
+note bottom: * Extends to Pay Fine if overdue
+
+@enduml
